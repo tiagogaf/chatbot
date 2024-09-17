@@ -18,6 +18,7 @@ class ChatSession(Base):
     id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     user_name = Column(String(255), index=True)
     is_active = Column(Boolean, default=True)
+    language = Column(String(36), index=True, default="en")
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
     context_id = Column(String(36), ForeignKey("chat_contexts.id"))
