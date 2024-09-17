@@ -1,5 +1,6 @@
-interface AppLinkProps {
-  children: React.ReactNode;
+import { PropsWithChildren } from "react";
+
+interface AppLinkProps extends PropsWithChildren {
   link: string;
 }
 
