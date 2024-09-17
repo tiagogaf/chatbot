@@ -65,12 +65,14 @@ def edit_message(db: Session, chat_message: schemas.ChatMessageEdit):
         return None
     if db_chat_message.session.is_active == False:
         return None
-    if db_chat_message.response_id:
-        db_chat_response_message = db.query(models.ChatMessage).filter(
-            models.ChatMessage.id == db_chat_message.response_id
-        ).first()
-        db.delete(db_chat_response_message)
+    if db_chat_message.is_bot_message == True:
+        return None
+    
+    other_chat_messages = db.query(models.ChatMessage).filter(
+        models.ChatMessage.session_id == db_chat_message.session_id,
+        models.ChatMessage.created_at > db_chat_message.created_at)
 
+    other_chat_messages.delete()
     db_chat_message.content = chat_message.content
     bot_response = send_message_to_bot(db, db_chat_message)
     db_chat_message.response_id = bot_response.id
