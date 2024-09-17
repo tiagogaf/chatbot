@@ -1,6 +1,7 @@
-from sqlalchemy import Boolean, Column, ForeignKey, String, String
-from sqlalchemy.orm import relationship
 import uuid
+from sqlalchemy import Boolean, Column, ForeignKey, String, String, DateTime
+from sqlalchemy.orm import relationship
+from sqlalchemy.sql import func
 
 from .database import Base
 
@@ -16,7 +17,9 @@ class ChatSession(Base):
     __tablename__ = "chat_sessions"
     id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     user_name = Column(String(255), index=True)
-    is_active = Column(Boolean, default=False)
+    is_active = Column(Boolean, default=True)
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
     context_id = Column(String(36), ForeignKey("chat_contexts.id"))
     
     context = relationship("ChatContext", back_populates="sessions")
@@ -28,6 +31,9 @@ class ChatMessage(Base):
     id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
     content = Column(String(255), index=True)
     is_bot_message = Column(Boolean, default=False)
+    created_at = Column(DateTime(timezone=True), default=func.now())
+    updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
     session_id = Column(String(36), ForeignKey("chat_sessions.id"))
+    response_id = Column(String(36), ForeignKey("chat_messages.id", ondelete='SET NULL'), )
 
     session = relationship("ChatSession", back_populates="messages")
