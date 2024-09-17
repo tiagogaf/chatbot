@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Session
 
-from . import models, schemas
+from . import models, schemas, bot_service
 
 def get_contexts(db: Session):
     return db.query(models.ChatContext).all()
@@ -30,11 +30,10 @@ def close_session(db: Session, session_id: str):
     return db_chat_session
 
 def send_message_to_bot(db: Session, chat_message: schemas.ChatMessage):
-    # TODO: Call ChatGPT API and return response
-    content = "Response here!"
+    bot_response = bot_service.send_message_to_bot(chat_message=chat_message)
     db_chat_bot_message = models.ChatMessage(
         is_bot_message = True,
-        content = content,
+        content = bot_response,
         session_id = chat_message.session_id,
     )
     db.add(db_chat_bot_message)
