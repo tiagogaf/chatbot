@@ -24,7 +24,7 @@ class ChatSession(Base):
     context_id = Column(String(36), ForeignKey("chat_contexts.id"))
     
     context = relationship("ChatContext", back_populates="sessions")
-    messages = relationship("ChatMessage", back_populates="session")
+    messages = relationship("ChatMessage", back_populates="session", order_by="ChatMessage.created_at.asc()")
 
 
 class ChatMessage(Base):
@@ -34,7 +34,7 @@ class ChatMessage(Base):
     is_bot_message = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
-    session_id = Column(String(36), ForeignKey("chat_sessions.id"))
+    session_id = Column(String(36), ForeignKey("chat_sessions.id", ondelete='CASCADE'))
     response_id = Column(String(36), ForeignKey("chat_messages.id", ondelete='SET NULL'), )
 
     session = relationship("ChatSession", back_populates="messages")
