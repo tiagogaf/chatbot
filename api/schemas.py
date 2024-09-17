@@ -23,8 +23,9 @@ class ChatMessage(ChatMessageBase):
 
 
 class ChatSessionBase(BaseModel):
-    user_name : str
     context_id : str
+    user_name : str
+    language : str | None
 
 class ChatSessionCreate(ChatSessionBase):
     pass
