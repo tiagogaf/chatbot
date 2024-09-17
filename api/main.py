@@ -37,3 +37,15 @@ def close_session(session_id:str, db:Session=Depends(get_db)):
     if chat_session is None:
         raise HTTPException(status_code=404, detail="Session not found")
     return service.close_session(db=db, session_id=session_id)
+
+@app.post("/api/message/", response_model=schemas.ChatMessage)
+def create_message(chat_message:schemas.ChatMessageCreate, db:Session=Depends(get_db)):
+    return service.create_message(db=db, chat_message=chat_message)
+
+@app.put("/api/message/", response_model=schemas.ChatMessage)
+def edit_message(chat_message:schemas.ChatMessageEdit, db:Session=Depends(get_db)):
+    return service.edit_message(db=db, chat_message=chat_message)
+
+@app.delete("/api/message/", response_model=schemas.ChatMessage)
+def delete_message(chat_message:schemas.ChatMessageEdit, db:Session=Depends(get_db)):
+    return service.delete_message(db=db, chat_message=chat_message)
