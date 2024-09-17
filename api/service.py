@@ -9,10 +9,12 @@ def create_session(db: Session, chat_session: schemas.ChatSessionCreate):
     db_chat_session = models.ChatSession(
         user_name = chat_session.user_name,
         context_id = chat_session.context_id,
+        language = chat_session.language,
     )
     db.add(db_chat_session)
     db.commit()
     db.refresh(db_chat_session)
+    send_message_to_bot(db, chat_session = db_chat_session)
     return db_chat_session
 
 def get_session(db: Session, session_id: str):
@@ -29,12 +31,14 @@ def close_session(db: Session, session_id: str):
     db.refresh(db_chat_session)
     return db_chat_session
 
-def send_message_to_bot(db: Session, chat_message: schemas.ChatMessage):
-    bot_response = bot_service.send_message_to_bot(chat_message=chat_message)
+def send_message_to_bot(db: Session, chat_session: schemas.ChatSession):
+    bot_response = bot_service.send_message_to_bot(
+        chat_session = chat_session, 
+    )
     db_chat_bot_message = models.ChatMessage(
         is_bot_message = True,
         content = bot_response,
-        session_id = chat_message.session_id,
+        session_id = chat_session.id,
     )
     db.add(db_chat_bot_message)
     db.commit()
@@ -50,7 +54,7 @@ def create_message(db: Session, chat_message: schemas.ChatMessageCreate):
     db.commit()
     db.refresh(db_chat_message)
 
-    bot_response = send_message_to_bot(db, db_chat_message)
+    bot_response = send_message_to_bot(db, chat_session = db_chat_message.session)
     db_chat_message.response_id = bot_response.id
     db.commit()
     db.refresh(db_chat_message)
@@ -73,7 +77,7 @@ def edit_message(db: Session, chat_message: schemas.ChatMessageEdit):
 
     other_chat_messages.delete()
     db_chat_message.content = chat_message.content
-    bot_response = send_message_to_bot(db, db_chat_message)
+    bot_response = send_message_to_bot(db, chat_session = db_chat_message.session)
     db_chat_message.response_id = bot_response.id
     db.commit()
     db.refresh(db_chat_message)

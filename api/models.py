@@ -30,7 +30,7 @@ class ChatSession(Base):
 class ChatMessage(Base):
     __tablename__ = "chat_messages"
     id = Column(String(36), primary_key=True, index=True, default=uuid.uuid4)
-    content = Column(String(255), index=True)
+    content = Column(String(600), index=True)
     is_bot_message = Column(Boolean, default=False)
     created_at = Column(DateTime(timezone=True), default=func.now())
     updated_at = Column(DateTime(timezone=True), default=func.now(), onupdate=func.now())
