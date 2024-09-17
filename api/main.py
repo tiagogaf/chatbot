@@ -46,6 +46,6 @@ def create_message(chat_message:schemas.ChatMessageCreate, db:Session=Depends(ge
 def edit_message(chat_message:schemas.ChatMessageEdit, db:Session=Depends(get_db)):
     return service.edit_message(db=db, chat_message=chat_message)
 
-@app.delete("/api/message/", response_model=schemas.ChatMessage)
-def delete_message(chat_message:schemas.ChatMessageEdit, db:Session=Depends(get_db)):
-    return service.delete_message(db=db, chat_message=chat_message)
+@app.delete("/api/message/{chat_message_id}/", response_model=schemas.ChatMessage)
+def delete_message(chat_message_id:str, db:Session=Depends(get_db)):
+    return service.delete_message(db=db, chat_message_id=chat_message_id)
