@@ -7,9 +7,7 @@ def get_contexts(db: Session):
 
 def create_session(db: Session, chat_session: schemas.ChatSessionCreate):
     db_chat_session = models.ChatSession(
-        user_name = chat_session.user_name,
         context_id = chat_session.context_id,
-        language = chat_session.language,
     )
     db.add(db_chat_session)
     db.commit()
@@ -58,7 +56,7 @@ def create_message(db: Session, chat_message: schemas.ChatMessageCreate):
     db_chat_message.response_id = bot_response.id
     db.commit()
     db.refresh(db_chat_message)
-    return bot_response
+    return db_chat_message.session
 
 def edit_message(db: Session, chat_message: schemas.ChatMessageEdit):
     db_chat_message = db.query(models.ChatMessage).filter(
