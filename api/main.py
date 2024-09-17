@@ -30,3 +30,10 @@ def get_session(session_id:str, db:Session=Depends(get_db)):
     if chat_session is None:
         raise HTTPException(status_code=404, detail="Session not found")
     return chat_session
+
+@app.post("/api/session/{session_id}/close", response_model=schemas.ChatSession)
+def close_session(session_id:str, db:Session=Depends(get_db)):
+    chat_session = service.get_session(db, session_id = session_id )
+    if chat_session is None:
+        raise HTTPException(status_code=404, detail="Session not found")
+    return service.close_session(db=db, session_id=session_id)

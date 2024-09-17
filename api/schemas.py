@@ -40,7 +40,6 @@ class ChatContextCreate(ChatContextBase):
 
 class ChatContext(ChatContextBase):
     id : str
-    sessions : list[ChatSession] = []
 
     class Config:
         orm_mode = True
