@@ -20,6 +20,12 @@ const createSession = (data: { context_id: string }) =>
     data,
   });
 
+const closeSession = (session_id: string) =>
+  instance<ChatSession>({
+    method: "post",
+    url: `session/${session_id}`,
+  });
+
 const createMessage = (data: { session_id: string; content: string }) =>
   instance<ChatSession>({
     method: "post",
@@ -27,4 +33,24 @@ const createMessage = (data: { session_id: string; content: string }) =>
     data,
   });
 
-export { getContexts, createSession, createMessage };
+const editMessage = (data: { id: string; content: string }) =>
+  instance<ChatSession>({
+    method: "put",
+    url: "message",
+    data,
+  });
+
+const deleteMessage = (message_id: string) =>
+  instance<ChatSession>({
+    method: "delete",
+    url: `message/${message_id}`,
+  });
+
+export {
+  getContexts,
+  createSession,
+  closeSession,
+  createMessage,
+  editMessage,
+  deleteMessage,
+};
