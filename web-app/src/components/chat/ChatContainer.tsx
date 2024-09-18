@@ -95,6 +95,8 @@ const ChatContainer = () => {
       sx={{
         width: 320,
         height: 600,
+        maxWidth: "70vw",
+        maxHeight: "70vh",
       }}
     >
       <ChatHeader />
