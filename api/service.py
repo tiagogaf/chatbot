@@ -79,7 +79,7 @@ def edit_message(db: Session, chat_message: schemas.ChatMessageEdit):
     db_chat_message.response_id = bot_response.id
     db.commit()
     db.refresh(db_chat_message)
-    return bot_response
+    return db_chat_message.session
 
 def delete_message(db: Session, chat_message_id: str):
     db_chat_message = db.query(models.ChatMessage).filter(
@@ -92,6 +92,7 @@ def delete_message(db: Session, chat_message_id: str):
     if db_chat_message.is_bot_message == True:
         return None
     
+    session = db_chat_message.session
     other_chat_messages = db.query(models.ChatMessage).filter(
         models.ChatMessage.session_id == db_chat_message.session_id,
         models.ChatMessage.created_at > db_chat_message.created_at)
@@ -99,4 +100,5 @@ def delete_message(db: Session, chat_message_id: str):
     other_chat_messages.delete()
     db.delete(db_chat_message)
     db.commit()
-    return db_chat_message
+    db.refresh(session)
+    return session
