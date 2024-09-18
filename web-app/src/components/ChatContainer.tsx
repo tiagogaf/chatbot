@@ -6,7 +6,7 @@ import {
   Typography,
 } from "@mui/material";
 import { useChatSession } from "../providers";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { ChatMessage } from "../types";
 import { createMessage, deleteMessage, editMessage } from "../utils";
 import {
@@ -28,6 +28,7 @@ const ChatContainer = () => {
     string | undefined
   >();
   const [openDeleteConfirmation, setOpenDeleteConfirmation] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const handleSendMessage = async () => {
     try {
@@ -53,6 +54,7 @@ const ChatContainer = () => {
       console.log(error);
     }
     setLoading(false);
+    scrollToBottom();
   };
 
   const handleEditMessage = async (chatMessage: ChatMessage) => {
@@ -78,6 +80,17 @@ const ChatContainer = () => {
       console.log(error);
     }
     setLoading(false);
+    scrollToBottom();
+  };
+
+  const scrollToBottom = () => {
+    setTimeout(() =>
+      messagesEndRef.current?.scrollIntoView({
+        behavior: "smooth",
+        inline: "start",
+        block: "start",
+      })
+    );
   };
 
   return (
@@ -88,13 +101,13 @@ const ChatContainer = () => {
         height: 600,
       }}
     >
-      <Box className="flex flex-col items-center pt-2 pb-3">
-        <SupportAgent />
+      <Box className="flex flex-col items-center pt-2 pb-3 mb-2">
+        <SupportAgent className="mb-2" />
         <Typography variant="body1" className="font-bold">
           Hey 👋, I'm Ava
         </Typography>
         <Typography variant="caption" className="!font-light">
-          Ask me anything or pick a place to start
+          Ask me anything, I'm here to help you.
         </Typography>
       </Box>
       {!editedMessageId && (
@@ -104,7 +117,7 @@ const ChatContainer = () => {
               {message.is_bot_message ? (
                 <Box className="flex gap-2 mb-4">
                   <SupportAgent />
-                  <Box className="bg-gray-100 p-1 rounded-md">
+                  <Box className="bg-gray-100 p-2 rounded-md">
                     <Typography variant="caption">{message.content}</Typography>
                   </Box>
                 </Box>
@@ -123,13 +136,14 @@ const ChatContainer = () => {
                       onClick={() => handleEditMessage(message)}
                     />
                   </Box>
-                  <Box className="bg-gray-100 p-1 rounded-md items-center ">
+                  <Box className="bg-gray-100 p-2 rounded-md items-center ">
                     <Typography variant="caption">{message.content}</Typography>
                   </Box>
                 </Box>
               )}
             </Box>
           ))}
+          <Box ref={messagesEndRef} />
         </Box>
       )}
 
@@ -156,7 +170,9 @@ const ChatContainer = () => {
           />
         </Box>
         {loading || !session?.id ? (
-          <CircularProgress color="inherit" />
+          <Box className="flex">
+            <CircularProgress className="!h-6 !w-6" color="inherit" />
+          </Box>
         ) : (
           <Send onClick={handleSendMessage} />
         )}
