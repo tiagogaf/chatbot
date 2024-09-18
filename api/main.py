@@ -27,14 +27,9 @@ def get_db():
     finally:
         db.close()
 
-@app.get("/api/contexts", response_model=list[schemas.ChatContext])
-def get_contexts(db:Session=Depends(get_db)):
-    contexts = service.get_contexts(db)
-    return contexts
-
 @app.post("/api/session", response_model=schemas.ChatSession)
-def post_session(chat_session:schemas.ChatSessionCreate, db:Session=Depends(get_db)):
-    return service.create_session(db=db, chat_session=chat_session)
+def post_session(db:Session=Depends(get_db)):
+    return service.create_session(db=db)
 
 @app.get("/api/session/{session_id}", response_model=schemas.ChatSession)
 def get_session(session_id:str, db:Session=Depends(get_db)):

@@ -4,24 +4,17 @@ import Popper from "@mui/material/Popper";
 import { Box, Fab, Fade, Paper } from "@mui/material";
 import ChatContainer from "./ChatContainer";
 import { useChatSession } from "../providers";
-import { createSession, getContexts } from "../utils/api";
-import { ChatContext } from "../types";
+import { createSession } from "../utils";
 
 const ChatIcon = () => {
   const { session, setSession } = useChatSession();
-  const [contexts, setContexts] = useState<ChatContext[]>([]);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
 
   const handleClick = async (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(anchorEl ? null : event.currentTarget);
     if (!session) {
-      const { data: contexts } = await getContexts();
-      setContexts(contexts);
-
-      const { data: session } = await createSession({
-        context_id: contexts[0].id,
-      });
+      const { data: session } = await createSession();
       setSession(session);
     }
   };
@@ -35,7 +28,7 @@ const ChatIcon = () => {
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper>
-              <ChatContainer contexts={contexts} />
+              <ChatContainer />
             </Paper>
           </Fade>
         )}

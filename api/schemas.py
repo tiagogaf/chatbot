@@ -23,9 +23,6 @@ class ChatMessage(ChatMessageBase):
 
 
 class ChatSessionBase(BaseModel):
-    context_id : str
-
-class ChatSessionCreate(ChatSessionBase):
     pass
 
 class ChatSession(ChatSessionBase):
@@ -34,19 +31,6 @@ class ChatSession(ChatSessionBase):
     messages : list[ChatMessage] = []
     created_at: datetime
     updated_at: datetime
-
-    class Config:
-        from_attributes = True
-
-
-class ChatContextBase(BaseModel):
-    name : str
-
-class ChatContextCreate(ChatContextBase):
-    pass
-
-class ChatContext(ChatContextBase):
-    id : str
 
     class Config:
         from_attributes = True

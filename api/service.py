@@ -2,12 +2,9 @@ from sqlalchemy.orm import Session
 
 from . import models, schemas, bot_service
 
-def get_contexts(db: Session):
-    return db.query(models.ChatContext).all()
-
-def create_session(db: Session, chat_session: schemas.ChatSessionCreate):
+def create_session(db: Session):
     db_chat_session = models.ChatSession(
-        context_id = chat_session.context_id,
+        is_active = True,
     )
     db.add(db_chat_session)
     db.commit()

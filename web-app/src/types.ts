@@ -1,8 +1,3 @@
-export type ChatContext = {
-  id: string;
-  name: string;
-};
-
 export type ChatMessage = {
   id: string;
   content: string;
@@ -14,6 +9,5 @@ export type ChatMessage = {
 export type ChatSession = {
   id: string;
   is_active: boolean;
-  context: ChatContext;
   messages: ChatMessage[];
 };

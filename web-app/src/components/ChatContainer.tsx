@@ -1,16 +1,12 @@
 import { Box, Button, Input, Typography } from "@mui/material";
 import { useChatSession } from "../providers";
 import { useState } from "react";
-import { ChatContext, ChatMessage } from "../types";
-import { createMessage, deleteMessage, editMessage } from "../utils/api";
+import { ChatMessage } from "../types";
+import { createMessage, deleteMessage, editMessage } from "../utils";
 import { Close, Delete, Edit } from "@mui/icons-material";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-interface ChatContainerProps {
-  contexts?: ChatContext[];
-}
-
-const ChatContainer = ({ contexts }: ChatContainerProps) => {
+const ChatContainer = () => {
   const { session, setSession } = useChatSession();
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
