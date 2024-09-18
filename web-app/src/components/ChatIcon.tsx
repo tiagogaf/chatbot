@@ -24,7 +24,13 @@ const ChatIcon = () => {
       <Fab color="primary" aria-label="add" onClick={handleClick}>
         {open ? <Cancel /> : <Chat />}
       </Fab>
-      <Popper open={open} anchorEl={anchorEl} transition placement="left-end">
+      <Popper
+        open={open}
+        anchorEl={anchorEl}
+        transition
+        placement="left-end"
+        className="!m-3"
+      >
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
             <Paper>

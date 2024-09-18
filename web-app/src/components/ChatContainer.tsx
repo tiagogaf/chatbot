@@ -1,9 +1,22 @@
-import { Box, Button, Input, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Divider,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useChatSession } from "../providers";
 import { useState } from "react";
 import { ChatMessage } from "../types";
 import { createMessage, deleteMessage, editMessage } from "../utils";
-import { Close, Delete, Edit } from "@mui/icons-material";
+import {
+  AccountCircle,
+  Close,
+  Delete,
+  Edit,
+  Send,
+  SupportAgent,
+} from "@mui/icons-material";
 import ConfirmationDialog from "./ConfirmationDialog";
 
 const ChatContainer = () => {
@@ -69,34 +82,50 @@ const ChatContainer = () => {
 
   return (
     <Box
+      className="p-3 flex flex-col"
       sx={{
-        minHeight: 350,
+        width: 320,
+        height: 600,
       }}
     >
-      <Typography variant="body1">Hey 👋, I'm Ava</Typography>
-      <Typography variant="caption">
-        Ask me anything or pick a place to start
-      </Typography>
-      {editedMessageId ? (
-        <Box>
-          <Edit />
-          <Typography variant="caption">Editing message</Typography>
-          <Close onClick={handleCancelEdit} />
-        </Box>
-      ) : (
-        <Box>
+      <Box className="flex flex-col items-center pt-2 pb-3">
+        <SupportAgent />
+        <Typography variant="body1" className="font-bold">
+          Hey 👋, I'm Ava
+        </Typography>
+        <Typography variant="caption" className="!font-light">
+          Ask me anything or pick a place to start
+        </Typography>
+      </Box>
+      {!editedMessageId && (
+        <Box className="overflow-y-auto">
           {session?.messages.map((message, i) => (
             <Box key={i}>
-              <Typography>{message.content}</Typography>
-              {!message.is_bot_message && (
-                <Box>
-                  <Delete
-                    onClick={() => {
-                      setDeletedMessageId(message.id);
-                      setOpenDeleteConfirmation(true);
-                    }}
-                  />
-                  <Edit onClick={() => handleEditMessage(message)} />
+              {message.is_bot_message ? (
+                <Box className="flex gap-2 mb-4">
+                  <SupportAgent />
+                  <Box className="bg-gray-100 p-1 rounded-md">
+                    <Typography variant="caption">{message.content}</Typography>
+                  </Box>
+                </Box>
+              ) : (
+                <Box className="flex gap-2 mb-4 justify-end">
+                  <Box className="flex gap-1 items-center">
+                    <Delete
+                      className="!text-lg"
+                      onClick={() => {
+                        setDeletedMessageId(message.id);
+                        setOpenDeleteConfirmation(true);
+                      }}
+                    />
+                    <Edit
+                      className="!text-lg"
+                      onClick={() => handleEditMessage(message)}
+                    />
+                  </Box>
+                  <Box className="bg-gray-100 p-1 rounded-md items-center ">
+                    <Typography variant="caption">{message.content}</Typography>
+                  </Box>
                 </Box>
               )}
             </Box>
@@ -104,11 +133,33 @@ const ChatContainer = () => {
         </Box>
       )}
 
-      <Box>
-        <Input value={message} onChange={(e) => setMessage(e.target.value)} />
-        <Button onClick={handleSendMessage} disabled={loading || !session?.id}>
-          Send
-        </Button>
+      <Divider className="!mt-auto !my-4" />
+      {editedMessageId && (
+        <Box className="flex items-center mb-3 gap-1 bg-gray-50 p-3">
+          <Edit className="!text-sm" />
+          <Typography variant="caption">Editing message</Typography>
+          <Close className="ml-auto mr-0" onClick={handleCancelEdit} />
+        </Box>
+      )}
+      <Box className="flex gap-3 items-end mb-2">
+        <Box className="w-full flex items-end">
+          <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
+          <TextField
+            id="input-chat-message"
+            label="Your question"
+            className="w-full"
+            variant="standard"
+            multiline
+            maxRows={5}
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
+          />
+        </Box>
+        {loading || !session?.id ? (
+          <CircularProgress color="inherit" />
+        ) : (
+          <Send onClick={handleSendMessage} />
+        )}
       </Box>
 
       <ConfirmationDialog
