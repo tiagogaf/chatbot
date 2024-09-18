@@ -7,7 +7,7 @@ interface AppLinkProps extends PropsWithChildren {
 const AppLink = ({ children, link }: AppLinkProps) => {
   return (
     <a
-      className="flex items-center"
+      className="flex items-center text-2xl mb-5 font-bold"
       href={link}
       target="_blank"
       rel="noopener noreferrer"

@@ -91,7 +91,7 @@ const ChatContainer = () => {
 
   return (
     <Box
-      className="p-3 flex flex-col"
+      className="p-3 flex flex-col border rounded-md bg-white"
       sx={{
         width: 320,
         height: 600,

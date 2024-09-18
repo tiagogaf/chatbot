@@ -1,17 +1,23 @@
 import "./App.css";
 import { LinkContainer } from "./components";
 import { Box } from "@mui/material";
-import { ChatSessionProvider } from "./providers";
+import { ChatSessionProvider, colors, MaterialUIProvider } from "./providers";
 import { ChatIcon } from "./components/chat";
 
 function App() {
   return (
-    <Box>
-      <ChatSessionProvider>
-        <LinkContainer />
-        <ChatIcon />
-      </ChatSessionProvider>
-    </Box>
+    <MaterialUIProvider>
+      <Box
+        sx={{
+          backgroundColor: colors.cetaceanBlue,
+        }}
+      >
+        <ChatSessionProvider>
+          <LinkContainer />
+          <ChatIcon />
+        </ChatSessionProvider>
+      </Box>
+    </MaterialUIProvider>
   );
 }
 

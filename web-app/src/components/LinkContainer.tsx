@@ -1,11 +1,11 @@
-import { Box } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import AppLink from "./AppLink";
 import { LinkedIn, GitHub } from "@mui/icons-material";
 
 const LinkContainer = () => {
   return (
     <Box
-      className="flex flex-col justify-center items-center"
+      className="flex flex-col items-center text-white pt-10 px-5"
       sx={{
         height: "100vh",
       }}
@@ -18,6 +18,9 @@ const LinkContainer = () => {
         <GitHub className="mr-3" />
         Code + Documentation
       </AppLink>
+      <Typography className="mt-10" variant="h5">
+        Note: to start a new session, please reload the page
+      </Typography>
     </Box>
   );
 };
