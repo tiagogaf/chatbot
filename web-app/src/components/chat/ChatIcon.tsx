@@ -3,8 +3,8 @@ import { Chat, Cancel } from "@mui/icons-material";
 import Popper from "@mui/material/Popper";
 import { Box, Fab, Fade, Paper } from "@mui/material";
 import ChatContainer from "./ChatContainer";
-import { useChatSession } from "../providers";
-import { createSession } from "../utils";
+import { useChatSession } from "../../providers";
+import { createSession } from "../../utils";
 
 const ChatIcon = () => {
   const { session, setSession } = useChatSession();

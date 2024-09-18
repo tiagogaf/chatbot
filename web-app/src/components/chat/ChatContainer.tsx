@@ -5,19 +5,15 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import { useChatSession } from "../providers";
+import { useChatSession } from "../../providers";
 import { useRef, useState } from "react";
-import { ChatMessage } from "../types";
-import { createMessage, deleteMessage, editMessage } from "../utils";
-import {
-  AccountCircle,
-  Close,
-  Delete,
-  Edit,
-  Send,
-  SupportAgent,
-} from "@mui/icons-material";
-import ConfirmationDialog from "./ConfirmationDialog";
+import { ChatMessage } from "../../types";
+import { createMessage, deleteMessage, editMessage } from "../../utils";
+import { AccountCircle, Close, Edit, Send } from "@mui/icons-material";
+import ConfirmationDialog from "./../ConfirmationDialog";
+import ChatHeader from "./ChatHeader";
+import ChatBotMessage from "./ChatBotMessage";
+import ChatUserMessage from "./ChatUserMessage";
 
 const ChatContainer = () => {
   const { session, setSession } = useChatSession();
@@ -101,45 +97,22 @@ const ChatContainer = () => {
         height: 600,
       }}
     >
-      <Box className="flex flex-col items-center pt-2 pb-3 mb-2">
-        <SupportAgent className="mb-2" />
-        <Typography variant="body1" className="font-bold">
-          Hey 👋, I'm Ava
-        </Typography>
-        <Typography variant="caption" className="!font-light">
-          Ask me anything, I'm here to help you.
-        </Typography>
-      </Box>
+      <ChatHeader />
       {!editedMessageId && (
         <Box className="overflow-y-auto">
           {session?.messages.map((message, i) => (
             <Box key={i}>
               {message.is_bot_message ? (
-                <Box className="flex gap-2 mb-4">
-                  <SupportAgent />
-                  <Box className="bg-gray-100 p-2 rounded-md">
-                    <Typography variant="caption">{message.content}</Typography>
-                  </Box>
-                </Box>
+                <ChatBotMessage message={message} />
               ) : (
-                <Box className="flex gap-2 mb-4 justify-end">
-                  <Box className="flex gap-1 items-center">
-                    <Delete
-                      className="!text-lg"
-                      onClick={() => {
-                        setDeletedMessageId(message.id);
-                        setOpenDeleteConfirmation(true);
-                      }}
-                    />
-                    <Edit
-                      className="!text-lg"
-                      onClick={() => handleEditMessage(message)}
-                    />
-                  </Box>
-                  <Box className="bg-gray-100 p-2 rounded-md items-center ">
-                    <Typography variant="caption">{message.content}</Typography>
-                  </Box>
-                </Box>
+                <ChatUserMessage
+                  message={message}
+                  onEditMessage={handleEditMessage}
+                  onDeleteMessage={() => {
+                    setDeletedMessageId(message.id);
+                    setOpenDeleteConfirmation(true);
+                  }}
+                />
               )}
             </Box>
           ))}

@@ -1,7 +1,8 @@
 import "./App.css";
-import { ChatIcon, LinkContainer } from "./components";
+import { LinkContainer } from "./components";
 import { Box } from "@mui/material";
 import { ChatSessionProvider } from "./providers";
+import { ChatIcon } from "./components/chat";
 
 function App() {
   return (
