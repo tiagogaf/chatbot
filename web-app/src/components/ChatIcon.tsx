@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Chat, Cancel } from "@mui/icons-material";
 import Popper from "@mui/material/Popper";
-import { Box, Fade, Paper } from "@mui/material";
+import { Box, Fab, Fade, Paper } from "@mui/material";
 import ChatContainer from "./ChatContainer";
 import { useChatSession } from "../providers";
 import { createSession, getContexts } from "../utils/api";
@@ -28,7 +28,9 @@ const ChatIcon = () => {
 
   return (
     <Box className="absolute right-3 bottom-3 cursor-pointer">
-      <Box onClick={handleClick}>{open ? <Cancel /> : <Chat />}</Box>
+      <Fab color="primary" aria-label="add" onClick={handleClick}>
+        {open ? <Cancel /> : <Chat />}
+      </Fab>
       <Popper open={open} anchorEl={anchorEl} transition placement="left-end">
         {({ TransitionProps }) => (
           <Fade {...TransitionProps} timeout={350}>
