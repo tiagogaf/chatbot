@@ -21,7 +21,12 @@ const ChatIcon = () => {
 
   return (
     <Box className="absolute right-3 bottom-3 cursor-pointer">
-      <Fab color="secondary" aria-label="add" onClick={handleClick}>
+      <Fab
+        id="chat-icon"
+        color="secondary"
+        aria-label="open chat"
+        onClick={handleClick}
+      >
         {open ? <Cancel /> : <Chat />}
       </Fab>
       <Popper

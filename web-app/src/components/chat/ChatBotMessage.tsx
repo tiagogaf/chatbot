@@ -8,10 +8,12 @@ interface ChatBotMessageProps {
 
 const ChatBotMessage = ({ message }: ChatBotMessageProps) => {
   return (
-    <Box className="flex gap-2 mb-4">
+    <Box id="chat-bot-message-container" className="flex gap-2 mb-4">
       <SupportAgent />
       <Box className="bg-gray-100 p-2 rounded-md">
-        <Typography variant="caption">{message.content}</Typography>
+        <Typography id="chat-bot-message" variant="caption">
+          {message.content}
+        </Typography>
       </Box>
     </Box>
   );

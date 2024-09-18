@@ -91,6 +91,7 @@ const ChatContainer = () => {
 
   return (
     <Box
+      id="chat-container"
       className="p-3 flex flex-col border rounded-md bg-white"
       sx={{
         width: 320,
@@ -126,8 +127,15 @@ const ChatContainer = () => {
       {editedMessageId && (
         <Box className="flex items-center mb-3 gap-1 bg-gray-50 p-3">
           <Edit className="!text-sm" />
-          <Typography variant="caption">Editing message</Typography>
-          <Close className="ml-auto mr-0" onClick={handleCancelEdit} />
+          <Typography id="close-edit-title" variant="caption">
+            Editing message
+          </Typography>
+          <Close
+            id="close-edit-message"
+            aria-labelledby="close-edit-title"
+            className="ml-auto mr-0"
+            onClick={handleCancelEdit}
+          />
         </Box>
       )}
       <Box className="flex gap-3 items-end mb-2">
@@ -135,6 +143,7 @@ const ChatContainer = () => {
           <AccountCircle sx={{ color: "action.active", mr: 1, my: 0.5 }} />
           <TextField
             id="input-chat-message"
+            aria-label="question"
             label="Your question"
             className="w-full"
             variant="standard"
@@ -146,10 +155,18 @@ const ChatContainer = () => {
         </Box>
         {loading || !session?.id ? (
           <Box className="flex">
-            <CircularProgress className="!h-6 !w-6" color="inherit" />
+            <CircularProgress
+              aria-label="wait"
+              className="!h-6 !w-6"
+              color="inherit"
+            />
           </Box>
         ) : (
-          <Send onClick={handleSendMessage} />
+          <Send
+            id="send-message-button"
+            aria-label="ask question"
+            onClick={handleSendMessage}
+          />
         )}
       </Box>
 
