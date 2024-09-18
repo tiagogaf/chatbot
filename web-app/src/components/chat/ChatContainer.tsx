@@ -165,6 +165,7 @@ const ChatContainer = () => {
           <Send
             id="send-message-button"
             aria-label="ask question"
+            className="cursor-pointer"
             onClick={handleSendMessage}
           />
         )}
