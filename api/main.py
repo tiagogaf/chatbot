@@ -1,6 +1,9 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.responses import HTMLResponse
+from time import time
+from fastapi import FastAPI, __version__
 
 from . import service, models, schemas
 from .database import SessionLocal, engine
@@ -26,6 +29,14 @@ def get_db():
         yield db
     finally:
         db.close()
+
+@app.get("/")
+async def root():
+    return HTMLResponse("Tiago Guimaraes - Chatbot")
+
+@app.get('/ping')
+async def hello():
+    return {'res': 'pong', 'version': __version__, "time": time()}
 
 @app.post("/api/session", response_model=schemas.ChatSession)
 def post_session(db:Session=Depends(get_db)):
