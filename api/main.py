@@ -4,9 +4,10 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import HTMLResponse
 from time import time
 from fastapi import FastAPI, __version__
-
-from . import service, models, schemas
-from .database import SessionLocal, engine
+import os, sys
+sys.path.append(os.path.join(os.path.dirname(__file__)))
+from app import service, models, schemas
+from app.database import SessionLocal, engine
 
 models.Base.metadata.create_all(bind=engine)
 
