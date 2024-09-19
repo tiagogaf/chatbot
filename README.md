@@ -12,6 +12,8 @@
 
 ## How it Works
 
+<img width="326" alt="image" src="https://github.com/user-attachments/assets/2ade5dc9-b7e6-4488-88c1-df2b32618e46">
+
 The application aims to create a chatbot that will help website users solve their problems or answer questions.
 
 The user clicks on the chat icon at the bottom of the page and has access to the virtual assistant. When the page is reloaded, the messages are lost and a new session begins.
@@ -34,6 +36,8 @@ Behind the chatbot, I used an integration with the [OpenAI API](https://platform
 When starting the conversation, I tell the bot what the context of the conversation is and explain how it should behave. The messages follow a history of sendings, that is, they are all linked to the same context.
 
 The integration with the [OpenAI API](https://platform.openai.com/docs/api-reference/introduction?lang=python) allowed for great flexibility in serving users, they can change the subject whenever they want and even use the language they prefer, for example, having a conversation in Portuguese.
+
+
 
 ## Running Locally
 
