@@ -67,7 +67,7 @@ The integration with the [OpenAI API](https://platform.openai.com/docs/api-refer
 ### API
 
 - Make sure you have a `.env` file with the environment variables.
-  - See: [Create a .env file][#web-app]
+  - See: [Running Locally](#running-locally)
 - Run the following commands:
   - `cd api`
   - `python3 -m unittest`
