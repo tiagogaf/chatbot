@@ -35,7 +35,7 @@ def get_session(db: Session, session_id: str):
     """
     return db.query(models.ChatSession).filter(
         models.ChatSession.id == session_id, 
-        models.ChatSession.is_active == True).first()
+        models.ChatSession.is_active).first()
 
 def close_session(db: Session, session_id: str):
     """
@@ -126,9 +126,9 @@ def edit_message(db: Session, chat_message: schemas.ChatMessageEdit):
     
     if db_chat_message is None:
         return None
-    if db_chat_message.session.is_active == False:
+    if not db_chat_message.session.is_active:
         return None
-    if db_chat_message.is_bot_message == True:
+    if db_chat_message.is_bot_message:
         return None
     
     other_chat_messages = db.query(models.ChatMessage).filter(
@@ -160,9 +160,9 @@ def delete_message(db: Session, chat_message_id: str):
     
     if db_chat_message is None:
         return None
-    if db_chat_message.session.is_active == False:
+    if not db_chat_message.session.is_active:
         return None
-    if db_chat_message.is_bot_message == True:
+    if db_chat_message.is_bot_message:
         return None
     
     session = db_chat_message.session
