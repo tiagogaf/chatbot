@@ -78,6 +78,13 @@ The integration with the [OpenAI API](https://platform.openai.com/docs/api-refer
   - `cd web-app`
   - `npm test`
 
+## Linter
+
+- I used [Ruff](https://github.com/astral-sh/ruff) as a Python linter tool.
+- Run the following commands for lint checking:
+  - `cd api`
+  - `ruff check`
+
 ## Future improvements
 
 ### API
