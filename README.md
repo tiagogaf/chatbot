@@ -8,7 +8,7 @@
 
 **Frontend**: React, Typescript, Material UI, Tailwind, Axios, and Jest
 
-**Backend**: Python, FastAPI, and MySQL for the database
+**Backend**: Python, FastAPI, SQLAlchemy, and MySQL for the database
 
 ## How it Works
 
@@ -37,8 +37,6 @@ When starting the conversation, I tell the bot what the context of the conversat
 
 The integration with the [OpenAI API](https://platform.openai.com/docs/api-reference/introduction?lang=python) allowed for great flexibility in serving users, they can change the subject whenever they want and even use the language they prefer, for example, having a conversation in Portuguese.
 
-
-
 ## Running Locally
 
 ### API
@@ -64,12 +62,27 @@ The integration with the [OpenAI API](https://platform.openai.com/docs/api-refer
   - `npm start`
 - You should be able to access the API documentation at: `http://localhost:8000/docs`
 
+## Unit Tests
+
+### API
+
+- Make sure you have a `.env` file with the environment variables.
+  - See: [Create a .env file][#web-app]
+- Run the following commands:
+  - `cd api`
+  - `python3 -m unittest`
+
+### Web App
+
+- Run the following commands:
+  - `cd web-app`
+  - `npm test`
+
 ## Future improvements
 
 ### API
 
 - Add [Alembic](https://alembic.sqlalchemy.org/en/latest/) as a database migration tool for use with [SQLAlchemy](https://www.sqlalchemy.org/).
-- Add tests!
 
 ### Web App
 
